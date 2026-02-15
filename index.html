@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Drive 👍</title>
+<style>
+  body { font-family: Arial; background: #f9f9f9; padding: 30px; text-align: center; }
+  h1 { margin-bottom: 20px; }
+  .file-container { display: flex; flex-direction: column; align-items: center; }
+  .file-item { background: white; border: 1px solid #ddd; padding: 15px 20px; margin: 10px 0; width: 300px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .file-name { overflow-x: auto; }
+  .download-btn { background: #0077ff; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; text-decoration: none; }
+  .download-btn:hover { background: #005ecc; }
+</style>
+</head>
+<body>
+<h1>My Drive</h1>
+<p>Click a file to download:</p>
+<div class="file-container" id="file-list">
+</div>
+
+<script>
+// Mix of local and external files
+const files = [
+  { name: "SUNP0001.AVI", url: "files/SUNP0001.AVI" },
+  { name: "SUNP0002.AVI", url: "files/SUNP0002.AVI" },
+  { name: "SUNP0003.AVI", url: "files/SUNP0003.AVI" },
+  { name: "SUNP0004.AVI", url: "files/SUNP0004.AVI" },
+  { name: "SUNP0005.AVI", url: "files/SUNP0005.AVI" },
+  { name: "SUNP0006.AVI", url: "files/SUNP0006.AVI" },
+  { name: "SUNP0007.AVI", url: "https://drive.usercontent.google.com/u/0/uc?id=1RuJkMTCcBaG391PmDBK66o6jaHcpym4P&export=download" },
+  { name: "SUNP0008.AVI", url: "files/SUNP0008.AVI" },
+];
+
+const container = document.getElementById('file-list');
+
+files.forEach(file => {
+  const item = document.createElement('div');
+  item.className = 'file-item';
+
+  const name = document.createElement('span');
+  name.className = 'file-name';
+  name.textContent = file.name;
+
+  const btn = document.createElement('a');
+  btn.className = 'download-btn';
+  btn.href = file.url;
+  // Only local files use download attribute
+  if (file.url.startsWith("files/")) btn.download = file.name;
+  btn.target = "_blank"; // opens external links in new tab
+  btn.rel = "noopener";
+  btn.textContent = "Download";
+
+  item.appendChild(name);
+  item.appendChild(btn);
+  container.appendChild(item);
+});
+</script>
+</body>
+</html>
