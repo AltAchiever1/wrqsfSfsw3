@@ -4,23 +4,69 @@
 <meta charset="UTF-8">
 <title>My Drive 👍</title>
 <style>
-  body { font-family: Arial; background: #f9f9f9; padding: 30px; text-align: center; }
+  body { 
+    font-family: Arial; 
+    background: #f9f9f9; 
+    padding: 30px; 
+    text-align: center; 
+  }
+
   h1 { margin-bottom: 20px; }
-  .file-container { display: flex; flex-direction: column; align-items: center; }
-  .file-item { background: white; border: 1px solid #ddd; padding: 15px 20px; margin: 10px 0; width: 300px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-  .file-name { overflow-x: auto; }
-  .download-btn { background: #0077ff; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; text-decoration: none; }
+
+  .file-container { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+  }
+
+  .file-item { 
+    background: white; 
+    border: 1px solid #ddd; 
+    padding: 15px 20px; 
+    margin: 10px 0; 
+    width: 340px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+  }
+
+  .file-name { 
+    overflow-x: auto; 
+    max-width: 120px;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  .view-btn, .download-btn { 
+    color: white; 
+    border: none; 
+    padding: 6px 10px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .view-btn { background: #555; }
+  .view-btn:hover { background: #333; }
+
+  .download-btn { background: #0077ff; }
   .download-btn:hover { background: #005ecc; }
 </style>
 </head>
 <body>
+
 <h1>My Drive</h1>
-<p>Click a file to download:</p>
-<div class="file-container" id="file-list">
-</div>
+<p>Click a file to view or download:</p>
+
+<div class="file-container" id="file-list"></div>
 
 <script>
-// Mix of local and external files
 const files = [
 { name: "1.JPG", url: "files/1.JPG" },
 { name: "2.JPG", url: "files/2.JPG" },
@@ -61,19 +107,32 @@ files.forEach(file => {
   name.className = 'file-name';
   name.textContent = file.name;
 
-  const btn = document.createElement('a');
-  btn.className = 'download-btn';
-  btn.href = file.url;
-  // Only local files use download attribute
-  if (file.url.startsWith("files/")) btn.download = file.name;
-  btn.target = "_blank"; // opens external links in new tab
-  btn.rel = "noopener";
-  btn.textContent = "Download";
+  const buttonGroup = document.createElement('div');
+  buttonGroup.className = 'button-group';
+
+  // View Button
+  const viewBtn = document.createElement('a');
+  viewBtn.className = 'view-btn';
+  viewBtn.href = file.url;
+  viewBtn.target = "_blank";
+  viewBtn.rel = "noopener";
+  viewBtn.textContent = "View";
+
+  // Download Button
+  const downloadBtn = document.createElement('a');
+  downloadBtn.className = 'download-btn';
+  downloadBtn.href = file.url;
+  if (file.url.startsWith("files/")) downloadBtn.download = file.name;
+  downloadBtn.textContent = "Download";
+
+  buttonGroup.appendChild(viewBtn);
+  buttonGroup.appendChild(downloadBtn);
 
   item.appendChild(name);
-  item.appendChild(btn);
+  item.appendChild(buttonGroup);
   container.appendChild(item);
 });
 </script>
+
 </body>
 </html>
